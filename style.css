@@ -1,0 +1,45 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color:#f4f4f4;
+}
+header {
+    background-color: #333;
+    color: white;
+    padding: 1rem;
+    text-align: center;
+}
+nav a {
+    color: white;
+    text-decoration: none;
+    margin: 0 15px;
+}
+section {
+    padding: 20px;
+}
+.full-width-image {
+    width: 100%;
+    height: auto; /* This ensures the image keeps its aspect ratio */
+    display: block; /* Removes default inline spacing */
+    margin: 0; /* Removes default margin */
+    padding: 0;
+}
+.half-height-image {
+    width: 100%;
+    height: auto; /* This ensures the image keeps its aspect ratio */
+    display: block; /* Removes default inline spacing */
+    margin: 0; /* Removes default margin */
+    padding: 0;
+}
+.small-icon {
+    width: 10%;
+    height: auto; /* This ensures the image keeps its aspect ratio */
+    display: block; /* Removes default inline spacing */
+    margin: 0; /* Removes default margin */
+    padding: 0;
+}
+.smalCheckBox {
+    width: 60px;
+    height: 15px;
+}

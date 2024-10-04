@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Online</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Order Your Meal</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="menu.html">Menu</a>
+        </nav>
+    </header>
+    <section>
+        <form id="orderForm">
+            <h2>Select your meal</h2>
+            <h3>Starters</h3>
+
+            <label>
+                <input type="checkbox" id="antipastiSmall" data-price="7">
+                Mediterranean Antipasti - Small - £7
+            </label>
+            <input type="number" id="antipastiSmallQuantity" min="1" value="1" class="smalCheckBox" enabled><br>
+
+            <label>
+                <input type="checkbox" id="antipastiLarge" data-price="13">
+                Mediterranean Antipasti - Large - £13
+            </label>
+            <input type="number" id="antipastiLargeQuantity" min="1" value="1" class="smalCheckBox" enabled><br>
+
+            <label>
+                <input type="checkbox" id="bresaola" data-price="7">
+                Bresaola - £7
+            </label>
+            <input type="number" id="bresaolaQuantity" min="1" value="1" class="smalCheckBox" enabled><br>
+
+            <label>
+                <input type="checkbox" id="insalataVerde" data-price="5">
+                Insalata Verde - £5
+            </label>
+            <input type="number" id="insalataVerdeQuantity" min="1" value="1" class="smalCheckBox" enabled><br>
+
+            <h3>Main Course</h3>
+
+            <label>
+                <input type="checkbox" id="pastaPomodoro" data-price="7">
+                Pasta al pomodoro e basilico - £7
+            </label>
+            <input type="number" id="pastaPomodoroQuantity" min="1" value="1" class="smalCheckBox" enabled><br>
+
+            <label>
+                <input type="checkbox" id="pastaArrabbiata" data-price="7">
+                Pasta all Arrabbiata - £7
+            </label>
+            <input type="number" id="pastaArrabbiataQuantity" min="1" value="1" class="smalCheckBox" enabled><br>
+
+            <label>
+                <input type="checkbox" id="ravioliZucca" data-price="9">
+                Ravioli alla Zucca - £9
+            </label>
+            <input type="number" id="ravioliZuccaQuantity" min="1" value="1" class="smalCheckBox" enabled><br>
+
+            <label>
+                <input type="checkbox" id="pastaAmatriciana" data-price="9">
+                Pasta Amatriciana - £9
+            </label>
+            <input type="number" id="pastaAmatricianaQuantity" min="1" value="1" class="smalCheckBox" enabled><br>
+
+            <label>
+                <input type="checkbox" id="pastaCarbonara" data-price="9">
+                Pasta Carbonara - £9
+            </label>
+            <input type="number" id="pastaCarbonaraQuantity" min="1" value="1" class="smalCheckBox" enabled><br>
+
+            <label>
+                <input type="checkbox" id="pastaGricia" data-price="9">
+                Pasta alla Gricia - £9
+            </label>
+            <input type="number" id="pastaGriciaQuantity" min="1" value="1" class="smalCheckBox" enabled><br>
+
+            <label>
+                <input type="checkbox" id="pastaPesto" data-price="10">
+                Pasta al Pesto Genovese - £10
+            </label>
+            <input type="number" id="pastaPestoQuantity" min="1" value="1" class="smalCheckBox" enabled><br>
+
+            <h3>Place your order</h3>
+            <label for="name">Your Name:</label>
+            <input type="text" id="name" required><br><br>
+
+            <p id="totalAmount">Total Amount: £0</p>
+            <button type="submit">Order</button>
+        </form>
+    </section>
+    <script src="script.js"></script>
+</body>
+</html>
+

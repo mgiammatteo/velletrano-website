@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Payment</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Payment</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="menu.html">Menu</a>
+        </nav>
+    </header>
+    <section>
+        <h2>Complete Your Order</h2>
+        <p id="orderDetails"></p>
+        <p id="totalAmount">Total Amount: £0</p>
+        <div id="paypal-button-container"></div>
+    </section>
+    <script src="https://www.paypal.com/sdk/js?client-id=Af0L6oqWyXUHK7oG4GW0Hrjqdk14i-E4eGhhtkpZqoA6qzOR8eQmz5WjQ1ztAyd2pm2Aolt8FJbZAE3U"></script> <!-- Replace with your client ID -->
+    <script>
+        // Get order details from localStorage
+        const orderDetails = localStorage.getItem('orderDetails');
+        const totalAmount = localStorage.getItem('totalAmount');
+
+        document.getElementById('orderDetails').innerHTML = orderDetails || 'No items selected.';
+        document.getElementById('totalAmount').textContent = `Total Amount: £${totalAmount || '0'}`;
+        //document.getElementById('totalAmount').innerHTML = `<strong>Total Amount: £${totalAmount || '0'}</strong>`;
+
+
+        // PayPal button configuration
+        paypal.Buttons({
+            createOrder: function(data, actions) {
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            value: totalAmount || '0.01' // Use the total amount from localStorage or default to 0.01
+                        }
+                    }]
+                });
+            },
+            onApprove: function(data, actions) {
+                return actions.order.capture().then(function(details) {
+                    alert('Transaction completed by ' + details.payer.name.given);
+                    // Optionally, redirect to a confirmation page or show a success message
+                });
+            }
+        }).render('#paypal-button-container'); // Display the PayPal button
+    </script>
+</body>
+</html>
+
