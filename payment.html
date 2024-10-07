@@ -17,19 +17,36 @@
     <section>
         <h2>Complete Your Order</h2>
         <p id="orderDetails"></p>
+        <p id="collectionDateTime"></p>
         <p id="totalAmount">Total Amount: £0</p>
         <div id="paypal-button-container"></div>
     </section>
+    
+    <!-- EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <script type="text/javascript">
+       (function(){
+          emailjs.init("A4b7TVkZUtkw8EuK2"); // Replace with your EmailJS public key
+       })();
+    </script>
+
+    <!-- PayPal SDK -->
     <script src="https://www.paypal.com/sdk/js?client-id=Af0L6oqWyXUHK7oG4GW0Hrjqdk14i-E4eGhhtkpZqoA6qzOR8eQmz5WjQ1ztAyd2pm2Aolt8FJbZAE3U"></script> <!-- Replace with your client ID -->
+    
     <script>
         // Get order details from localStorage
         const orderDetails = localStorage.getItem('orderDetails');
+        const collectionDateTime = localStorage.getItem('collectionDateTime');
         const totalAmount = localStorage.getItem('totalAmount');
 
         document.getElementById('orderDetails').innerHTML = orderDetails || 'No items selected.';
         document.getElementById('totalAmount').textContent = `Total Amount: £${totalAmount || '0'}`;
-        //document.getElementById('totalAmount').innerHTML = `<strong>Total Amount: £${totalAmount || '0'}</strong>`;
 
+        // Log values to console for debugging
+        console.log('Order Details:', document.getElementById('orderDetails').textContent);
+        console.log('Collection Date and Time: ', collectionDateTime);
+        console.log('Total Amount:', totalAmount);
+        
 
         // PayPal button configuration
         paypal.Buttons({
@@ -42,14 +59,43 @@
                     }]
                 });
             },
+            onClick: function() {
+                alert('Transaction completed by Test User'); // Corrected field
+                // Trigger email when the button is clicked (test only)
+                emailjs.send('service_rkxemrt', 'template_ellv3tp', {
+                    customer_name: 'Test User', // You can hardcode or use a value for testing
+                    order_details: orderDetails || 'Test order details',
+                    collection_date_time: collectionDateTime || 'Test collection time',
+                    order_amount: totalAmount || '0'
+                }).then(function(response) {
+                    console.log('Test email sent successfully!', response.status, response.text);
+                }, function(error) {
+                    console.error('Failed to send test email:', error);
+                });
+            },
             onApprove: function(data, actions) {
                 return actions.order.capture().then(function(details) {
-                    alert('Transaction completed by ' + details.payer.name.given);
-                    // Optionally, redirect to a confirmation page or show a success message
+                    alert('Transaction completed by ' + details.payer.name.given_name); // Corrected field
+
+                    // Send email notification using EmailJS
+                    emailjs.send('service_rkxemrt', 'template_ellv3tp', {
+                        customer_name: details.payer.name.given_name,
+                        order_details: orderDetails || 'No order details',  // From localStorage
+                        collection_date_time: collectionDateTime || 'No collection time',  // From localStorage
+                        order_amount: totalAmount || '0'  // From localStorage
+                    }).then(function(response) {
+                        console.log('Email sent successfully!', response.status, response.text);
+                    }, function(error) {
+                        console.error('Failed to send email:', error);
+                    });
                 });
             }
         }).render('#paypal-button-container'); // Display the PayPal button
     </script>
+    
 </body>
 </html>
+
+
+
 

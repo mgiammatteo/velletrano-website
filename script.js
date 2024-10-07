@@ -61,6 +61,7 @@ document.querySelectorAll('input[type="number"]').forEach(input => {
 document.getElementById('orderForm').addEventListener('submit', function (e) {
     e.preventDefault(); // Prevent form submission
     const name = document.getElementById('name').value;
+    const collectionDateTime = document.getElementById('collectionDateTime').value;
     const orderDetails = items
         .filter(item => document.getElementById(item).checked)
         .map(item => `${item.replace(/([A-Z])/g, ' $1')}: ${document.getElementById(item).getAttribute('data-price')} x ${document.getElementById(`${item}Quantity`).value}`)
@@ -69,10 +70,50 @@ document.getElementById('orderForm').addEventListener('submit', function (e) {
 
     // Store order details and total amount in localStorage
     localStorage.setItem('orderDetails', `<strong>Order for ${name}:</strong> <br> ${orderDetails}`);
+    localStorage.setItem('collectionDateTime', collectionDateTime);
     localStorage.setItem('totalAmount', totalAmount);
 
     // Redirect to payment page
     window.location.href = 'payment.html';
 });
+
+// function saveOrderDetails() {
+//     const collectionDateTime = document.getElementById('collectionDateTime').value;
+//     localStorage.setItem('collectionDateTime', collectionDateTime);
+
+//     const name = document.getElementById('name').value;
+//     localStorage.setItem('name', name);
+    
+//     const orderDetails = document.getElementById('orderDetails').value;
+//     localStorage.setItem('orderDetails', orderDetails);
+
+//     const totalAmount = document.getElementById('totalAmount').value;
+//     localStorage.setItem('totalAmount', totalAmount);
+
+//     // Assuming you are already saving other order details to localStorage
+//     //const orderDetails = '...'; // Replace with actual order details
+//     //const totalAmount = '...';  // Replace with actual total amount
+//     localStorage.setItem('orderDetails', orderDetails);
+//     localStorage.setItem('totalAmount', totalAmount);
+
+//     // Log values to console for debugging
+//     console.log('Collection Date and Time:', collectionDateTime);
+//     console.log('Customer Name:', name);
+//     console.log('Order Details:', orderDetails);
+//     console.log('Total Amount:', totalAmount);
+    
+//     // Display on the screen temporarily
+//     const logElement = document.createElement('div');
+//     logElement.innerHTML = `
+//         <p>Collection Date and Time: ${collectionDateTime}</p>
+//         <p>Order Details: ${orderDetails}</p>
+//         <p>Total Amount: £${totalAmount}</p>
+//     `;
+    
+//     document.body.appendChild(logElement); // Append the log to the body of the page
+    
+//     // Redirect to payment page
+//     //window.location.href = "payment.html";
+// }
 
 

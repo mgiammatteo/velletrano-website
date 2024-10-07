@@ -34,11 +34,18 @@ section {
 }
 .small-icon {
     width: 10%;
-    height: auto; /* This ensures the image keeps its aspect ratio */
-    display: block; /* Removes default inline spacing */
-    margin: 0; /* Removes default margin */
+    height: auto;
+    display: block;
+    margin: 0;
     padding: 0;
+    transition: transform 0.3s ease; /* Smooth transition for zoom */
 }
+
+.zoomed {
+    transform: scale(5.0) translateX(60px); /* Zoom to 500% */
+    cursor: zoom-out; /* Change cursor when zoomed */
+}
+
 .smalCheckBox {
     width: 60px;
     height: 15px;
