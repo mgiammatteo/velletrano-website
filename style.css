@@ -42,12 +42,12 @@ section {
 }
 
 .zoomed {
-    transform: scale(5.0) translateX(60px); /* Zoom to 500% */
+    transform: scale(5.0) translateX(60px); /* Zoom to 500%  and translate on the right*/
     cursor: zoom-out; /* Change cursor when zoomed */
 }
 
-.smalCheckBox {
-    width: 60px;
+.smallCheckBox {
+    width: 50px;
     height: 15px;
 }
 
