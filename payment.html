@@ -32,7 +32,7 @@
     </script>
 
     <!-- PayPal SDK -->
-    <script src="https://www.paypal.com/sdk/js?client-id=Af0L6oqWyXUHK7oG4GW0Hrjqdk14i-E4eGhhtkpZqoA6qzOR8eQmz5WjQ1ztAyd2pm2Aolt8FJbZAE3U"></script> <!-- Replace with your client ID -->
+    <script src="https://www.paypal.com/sdk/js?client-id=Af0L6oqWyXUHK7oG4GW0Hrjqdk14i-E4eGhhtkpZqoA6qzOR8eQmz5WjQ1ztAyd2pm2Aolt8FJbZAE3U&currency=GBP"></script> <!-- Replace with your client ID -->
     
     <script>
         // Get order details from localStorage
@@ -64,18 +64,19 @@
             },
             onApprove: function(data, actions) {
                 return actions.order.capture().then(function(details) {
-                    alert('Transaction completed by ' + details.payer.name.given_name); // Corrected field
-
                     // Send email notification using EmailJS
                     emailjs.send('service_rkxemrt', 'template_ellv3tp', {
                         customer_name: details.payer.name.given_name,
+                        customer_email: details.payer.email_address,  // Customer's email
                         order_details: orderDetailsText || 'No order details',  // From localStorage
                         collection_date_time: collectionDateTime || 'No collection time',  // From localStorage
                         order_amount: totalAmount || '0'  // From localStorage
                     }).then(function(response) {
                         console.log('Email sent successfully!', response.status, response.text);
+                        alert('Transaction completed by ' + details.payer.name.given_name);
                     }, function(error) {
-                        console.error('Failed to send email:', error);
+                        console.log('Transaction Failed: ', error);
+                        alert('Transaction Failed');
                     });
                 });
             }

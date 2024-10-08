@@ -1,7 +1,7 @@
 // List of items
 const items = [
-    'antipastiSmall', 'antipastiLarge', 'bresaola', 
-    'insalataVerde', 'pastaPomodoro', 'pastaArrabbiata', 'ravioliZucca', 
+    'antipastiSmall', 'antipastiLarge', 'prosciuttoMelone', 'bresaola', 
+    'insalataVerde', 'pastaPomodoro', 'pastaRagu', 'pastaArrabbiata', 'ravioliZucca', 
     'pastaAmatriciana', 'pastaCarbonara', 'pastaGricia', 'pastaPesto'
 ];
 
@@ -50,13 +50,6 @@ document.querySelectorAll('input[type="number"]').forEach(input => {
     input.addEventListener('input', calculateTotal);
 });
 
-// Submit the form and display the order details
-// document.getElementById('orderForm').addEventListener('submit', function (e) {
-//     e.preventDefault(); // Prevent form submission for demo purposes
-//     const name = document.getElementById('name').value;
-//     alert(`Thank you, ${name}. Your order has been placed!`);
-// });
-
 // Handle form submission
 document.getElementById('orderForm').addEventListener('submit', function (e) {
     e.preventDefault(); // Prevent form submission
@@ -77,43 +70,5 @@ document.getElementById('orderForm').addEventListener('submit', function (e) {
     window.location.href = 'payment.html';
 });
 
-// function saveOrderDetails() {
-//     const collectionDateTime = document.getElementById('collectionDateTime').value;
-//     localStorage.setItem('collectionDateTime', collectionDateTime);
-
-//     const name = document.getElementById('name').value;
-//     localStorage.setItem('name', name);
-    
-//     const orderDetails = document.getElementById('orderDetails').value;
-//     localStorage.setItem('orderDetails', orderDetails);
-
-//     const totalAmount = document.getElementById('totalAmount').value;
-//     localStorage.setItem('totalAmount', totalAmount);
-
-//     // Assuming you are already saving other order details to localStorage
-//     //const orderDetails = '...'; // Replace with actual order details
-//     //const totalAmount = '...';  // Replace with actual total amount
-//     localStorage.setItem('orderDetails', orderDetails);
-//     localStorage.setItem('totalAmount', totalAmount);
-
-//     // Log values to console for debugging
-//     console.log('Collection Date and Time:', collectionDateTime);
-//     console.log('Customer Name:', name);
-//     console.log('Order Details:', orderDetails);
-//     console.log('Total Amount:', totalAmount);
-    
-//     // Display on the screen temporarily
-//     const logElement = document.createElement('div');
-//     logElement.innerHTML = `
-//         <p>Collection Date and Time: ${collectionDateTime}</p>
-//         <p>Order Details: ${orderDetails}</p>
-//         <p>Total Amount: £${totalAmount}</p>
-//     `;
-    
-//     document.body.appendChild(logElement); // Append the log to the body of the page
-    
-//     // Redirect to payment page
-//     //window.location.href = "payment.html";
-// }
 
 
