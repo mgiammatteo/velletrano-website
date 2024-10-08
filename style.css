@@ -49,7 +49,7 @@ section {
 /* Adjust for smaller screens (e.g., mobile) */
 @media (max-width: 768px) {
     .zoomed {
-        transform: scale(5.0) translate(0%, 0%); /* No translation on mobile */
+        transform: scale(100.0) translate(0%, 0%); /* No translation on mobile */
     }
 }
 
