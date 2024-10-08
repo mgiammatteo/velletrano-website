@@ -42,7 +42,7 @@ section {
 }
 
 .zoomed {
-    transform: scale(5.0) translateX(60px); /* Zoom to 500%  and translate on the right*/
+    transform: scale(5.0) translate(35%, 0%); /* Zoom to 500%  and translate to the right*/
     cursor: zoom-out; /* Change cursor when zoomed */
 }
 
