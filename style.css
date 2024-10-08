@@ -46,6 +46,13 @@ section {
     cursor: zoom-out; /* Change cursor when zoomed */
 }
 
+/* Adjust for smaller screens (e.g., mobile) */
+@media (max-width: 768px) {
+    .zoomed {
+        transform: scale(5.0) translate(0%, 0%); /* No translation on mobile */
+    }
+}
+
 .smallCheckBox {
     width: 50px;
     height: 15px;
