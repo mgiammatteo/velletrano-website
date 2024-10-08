@@ -50,3 +50,7 @@ section {
     width: 60px;
     height: 15px;
 }
+
+.customIndent {
+    text-indent: 50%;
+}
