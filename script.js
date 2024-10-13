@@ -1,9 +1,9 @@
 // List of items
 const items = [
-    'antipastiSmall', 'antipastiLarge', 'prosciuttoMelone', 'bresaola', 
+    'antipastiSmall', 'antipastiLarge', 'bresaola', 
     'insalataVerde', 
     'pastaPesto', 'pastaRagu', 'pastaAmatriciana', 'pastaCarbonara', 
-    'ravioliZucca', 'pastaGricia','pastaArrabbiata', 'pastaPomodoro'
+    'pastaGricia','pastaArrabbiata', 'pastaPomodoro'
 ];
 
 // Function to calculate the total amount based on selections

@@ -31,11 +31,11 @@
             </label>
             <input type="number" id="antipastiLargeQuantity" min="1" value="1" class="smallCheckBox" enabled><br>
 
-            <label>
+            <!-- <label>
                 <input type="checkbox" id="prosciuttoMelone" data-price="8">
                 Prosciutto e Melone - £8
             </label>
-            <input type="number" id="prosciuttoMeloneQuantity" min="1" value="1" class="smallCheckBox" enabled><br>
+            <input type="number" id="prosciuttoMeloneQuantity" min="1" value="1" class="smallCheckBox" enabled><br> -->
 
             <label>
                 <input type="checkbox" id="bresaola" data-price="7">
@@ -81,11 +81,11 @@
             </label>
             <input type="number" id="pastaGriciaQuantity" min="1" value="1" class="smallCheckBox" enabled><br>
 
-            <label>
+            <!-- <label>
                 <input type="checkbox" id="ravioliZucca" data-price="9">
                 Ravioli alla Zucca - £9
             </label>
-            <input type="number" id="ravioliZuccaQuantity" min="1" value="1" class="smallCheckBox" enabled><br>
+            <input type="number" id="ravioliZuccaQuantity" min="1" value="1" class="smallCheckBox" enabled><br> -->
 
             <label>
                 <input type="checkbox" id="pastaArrabbiata" data-price="7">
@@ -105,14 +105,15 @@
                 Collection is only available at the time specified below. <br>
                 Currently no delivery available.</p>
             <p><strong>Address:</strong> Appletrees, Buckingham Road, Westbury-Brackley, NN13 5JW<br>
-               <strong>Collection Times:</strong> Friday to Sunday, 6pm to 9pm</p>
+               <strong>Collection Times:</strong> Friday to Sunday, 6pm to 9pm<br>
+               <strong>For enquiries: </strong>01280473718 or email: velletrano@hotmail.com</p>
             <h3>Place your order</h3>
             <label for="name">Your Name:</label>
             <input type="text" id="name" required><br><br>
             <label for="collectionDateTime">Select Collection Date and Time:</label>
             <input type="datetime-local" id="collectionDateTime" name="collectionDateTime">
             <p id="totalAmount">Total Payable Amount: £0</p>
-            <button type="submit" disabled>Submit Order</button>
+            <button type="submit" enabled>Submit Order</button>
         </form>
     </section>
     <script src="script.js"></script>
