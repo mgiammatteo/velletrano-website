@@ -71,5 +71,26 @@ document.getElementById('orderForm').addEventListener('submit', function (e) {
     window.location.href = 'payment.html';
 });
 
+document.getElementById('collectionDateTime').addEventListener('input', function(event) {
+    const input = event.target;
+    const selectedDateTime = new Date(input.value);
+    const day = selectedDateTime.getDay();  // 0 for Sunday, 6 for Saturday
+    const hour = selectedDateTime.getHours();
+    const minute = selectedDateTime.getMinutes();
+
+    // Check if it's Friday (5), Saturday (6), or Sunday (0)
+    if (day !== 5 && day !== 6 && day !== 0) {
+        alert('Please select a Friday, Saturday, or Sunday.');
+        input.value = '';
+    }
+
+    // Check if time is between 6pm and 9pm (18:00 to 21:00)
+    if (hour < 18 || hour > 21 || (hour === 21 && minute > 0)) {
+        alert('Please select a time between 6pm and 9pm.');
+        input.value = '';
+    }
+});
+
+
 
 
