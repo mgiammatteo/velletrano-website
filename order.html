@@ -100,22 +100,29 @@
             <input type="number" id="pastaPomodoroQuantity" min="1" value="1" class="smallCheckBox" enabled><br>
 
             <h3>Order and Collection</h3>
-            <p>Orders can be made any time. <br>
-                Payment must be made at the time of ordering. <br>
-                Collection is only available at the time specified below. <br>
-                Currently no delivery available.</p>
+            <p>Orders can be made any time;
+                payment must be made at the time of ordering; 
+                collection is only available at the times specified below;
+                currently no delivery available.</p>
             <p><strong>Address:</strong> Appletrees, Buckingham Road, Westbury-Brackley, NN13 5JW<br>
                <strong>Collection Times:</strong> Friday to Sunday, 6pm to 9pm<br>
                <strong>For enquiries: </strong>01280473718 or email: velletrano@hotmail.com</p>
             <h3>Place your order</h3>
             <label for="name">Your Name:</label>
             <input type="text" id="name" required><br><br>
-            <label for="collectionDateTime">Select Collection Date and Time:</label>
-            <input type="datetime-local" id="collectionDateTime" name="collectionDateTime" required>
-            <p id="totalAmount">Total Payable Amount: £0</p>
-            <button type="submit" enabled>Submit Order</button>
+            <label for="collectionDateTime">Select Collection Date and Time, then check Availability:</label><br><br>
+            <input type="datetime-local" id="collectionDateTime" name="collectionDateTime" required><br><br>
+            <!-- Buttons to test Firestore functions -->
+        <button id="checkSlotsBtn">Check Slot Availability</button>
+        <button id="bookSlotBtn">Book Slot</button>
+        <div id="bookingMessage" style="color: green;"></div>
+
+        <!-- Display the results -->
+        <div id="availableSlotsResult"></div>
+            <p id="totalAmount">Total Amount: £0</p>
+            <button class="custom-button" type="submit" enabled>Submit Order</button>
         </form>
     </section>
-    <script src="script.js"></script>
+    <script type="module" src="script.js"></script>
 </body>
 </html>
