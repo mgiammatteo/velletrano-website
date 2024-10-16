@@ -42,13 +42,22 @@ items.forEach(item => {
         checkbox.addEventListener('change', () => {
             toggleQuantityInput(item, `${item}Quantity`);
             calculateTotal();
+
+            // Store item selection in localStorage
+            sessionStorage.setItem(item, checkbox.checked);
         });
     }
 });
 
 // Event listeners for quantity input changes
 document.querySelectorAll('input[type="number"]').forEach(input => {
-    input.addEventListener('input', calculateTotal);
+    input.addEventListener('input', function () {
+        calculateTotal();
+
+        // Store quantity in localStorage
+        const item = input.id.replace('Quantity', ''); // Extract item name from quantity id
+        sessionStorage.setItem(`${item}Quantity`, input.value);
+    });
 });
 
 // Handle form submission
@@ -69,6 +78,16 @@ document.getElementById('orderForm').addEventListener('submit', function (e) {
 
     // Redirect to payment page
     window.location.href = 'payment.html';
+});
+
+// Handle name input changes and save to sessionStorage
+document.getElementById('name').addEventListener('input', function () {
+    sessionStorage.setItem('customerName', this.value);
+});
+
+// Handle collection date changes and store to sessionStorage
+document.getElementById('collectionDateTime').addEventListener('input', function () {
+    sessionStorage.setItem('collectionDateTime', this.value);
 });
 
 // Check that customer provided date and time are valid
@@ -192,6 +211,47 @@ document.getElementById('bookSlotBtn').addEventListener('click', async (event) =
         alert('Please enter both date and time!');
     }
 });
+
+////////////////////////
+// Restore functionality
+////////////////////////
+window.addEventListener('load', function () {
+    // Restore name
+    const storedName = sessionStorage.getItem('customerName');
+    if (storedName) {
+        document.getElementById('name').value = storedName;
+    }
+
+    // Restore Date and Time
+    const storeDateAndTime = sessionStorage.getItem('collectionDateTime');
+    if (storeDateAndTime) {
+        document.getElementById('collectionDateTime').value = storeDateAndTime;
+    }
+
+    items.forEach(item => {
+        const checkbox = document.getElementById(item);
+        const quantityInput = document.getElementById(`${item}Quantity`);
+
+        if (checkbox) {
+            // Restore checkbox state
+            const storedChecked = sessionStorage.getItem(item) === 'true';
+            checkbox.checked = storedChecked;
+
+            // Restore quantity if item was checked
+            if (storedChecked) {
+                const storedQuantity = sessionStorage.getItem(`${item}Quantity`) || 1;
+                quantityInput.disabled = false;
+                quantityInput.value = storedQuantity;
+            } else {
+                quantityInput.disabled = true;
+                quantityInput.value = 1; // Reset quantity to default
+            }
+        }
+    });
+
+    calculateTotal(); // Recalculate total after restoring selections
+});
+
 
 
 
