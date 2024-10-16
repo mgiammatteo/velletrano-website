@@ -110,8 +110,8 @@
             <h3>Place your order</h3>
             <label for="name">Your Name:</label>
             <input type="text" id="name" required><br><br>
-            <label for="collectionDateTime">Select Collection Date and Time:</label>
-            <input type="datetime-local" id="collectionDateTime" name="collectionDateTime" required>
+            <label for="collectionDateTime">Select Collection Date and Time, then check Availability:</label><br><br>
+            <input type="datetime-local" id="collectionDateTime" name="collectionDateTime" required><br><br>
             <!-- Buttons to test Firestore functions -->
         <button id="checkSlotsBtn">Check Slot Availability</button>
         <button id="bookSlotBtn">Book Slot</button>
@@ -119,107 +119,10 @@
 
         <!-- Display the results -->
         <div id="availableSlotsResult"></div>
-            <p id="totalAmount">Total Payable Amount: £0</p>
-            <button type="submit" enabled>Submit Order</button>
+            <p id="totalAmount">Total Amount: £0</p>
+            <button class="custom-button" type="submit" enabled>Submit Order</button>
         </form>
     </section>
-    <script src="script.js"></script>
-    <script type="module">
-        // Import the functions you need from the SDKs you need
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
-        import { getFirestore, collection, addDoc, getDocs, query, where } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore.js";
-        
-        // Your web app's Firebase configuration
-        const firebaseConfig = {
-          apiKey: "AIzaSyALpPjf1T2lH5uJAxMCbzudaP8HBXwsZPM",
-          authDomain: "velletrano-backend.firebaseapp.com",
-          projectId: "velletrano-backend",
-        };
-      
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-      
-        async function getAvailableSlots(date) {
-            const q = query(collection(db, "bookings"), where("date", "==", date));
-            const querySnapshot = await getDocs(q);
-            const bookedSlots = [];
-            
-            querySnapshot.forEach((doc) => {
-                bookedSlots.push(doc.data().time);
-            });
-            
-            // Sort the slots in increasing time order (HH:mm)
-            bookedSlots.sort((a, b) => {
-                // Convert 'HH:mm' format to minutes since midnight for comparison
-                const timeToMinutes = (time) => {
-                const [hours, minutes] = time.split(':').map(Number);
-                return hours * 60 + minutes;
-                };
-                
-                return timeToMinutes(a) - timeToMinutes(b);
-            });
-
-            return bookedSlots;
-        }
-        
-        // Function to book a time slot with a check to prevent double-booking
-        async function bookSlot(date, time) {
-            try {
-                // Check if the slot is already booked
-                const q = query(collection(db, "bookings"), where("date", "==", date), where("time", "==", time));
-                const querySnapshot = await getDocs(q);
-
-                if (!querySnapshot.empty) {
-                    // Slot is already booked, show an error message
-                    document.getElementById('bookingMessage').innerHTML = 
-                        `Slot already booked: ${time} on ${date}`;
-                    document.getElementById('bookingMessage').style.color = "red";
-                } else {
-                    // Slot is available, proceed with booking
-                    await addDoc(collection(db, "bookings"), { date: date, time: time });
-                    document.getElementById('bookingMessage').innerHTML = 
-                        `Slot booked: ${time} on ${date}`;
-                    document.getElementById('bookingMessage').style.color = "green";
-                }
-            } catch (e) {
-                console.error("Error booking slot: ", e);
-            }
-        }
-
-
-        // Function to display the available slots
-        document.getElementById('checkSlotsBtn').addEventListener('click', async () => {
-            event.preventDefault(); // Prevent form submission
-            const dateAndTime = document.getElementById('collectionDateTime').value;
-            document.getElementById('bookingMessage').innerHTML = ''; // Clear the message
-            const date = dateAndTime.split('T')[0];
-            const availableSlots = await getAvailableSlots(date);
-
-            if (availableSlots.length > 0) {
-                document.getElementById('availableSlotsResult').innerHTML = 
-                    'Slots already booked: ' + availableSlots.join(', ');
-            } else {
-                document.getElementById('availableSlotsResult').innerHTML = 'No slots booked for this date.';
-            }
-        });
-
-        // Function to book a slot
-        document.getElementById('bookSlotBtn').addEventListener('click', async () => {
-            event.preventDefault(); // Prevent form submission
-            const dateAndTime = document.getElementById('collectionDateTime').value;
-            document.getElementById('bookingMessage').innerHTML = ''; // Clear the message
-            const date = dateAndTime.split('T')[0];
-            const time = dateAndTime.split('T')[1];
-
-            if (date && time) {
-                await bookSlot(date, time);
-                // document.getElementById('availableSlotsResult').innerHTML = 
-                //     `Slot booked: ${time} on ${date}`;
-            } else {
-                alert('Please enter both date and time!');
-            }
-        });
-    </script>
+    <script type="module" src="script.js"></script>
 </body>
 </html>

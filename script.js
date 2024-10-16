@@ -71,6 +71,7 @@ document.getElementById('orderForm').addEventListener('submit', function (e) {
     window.location.href = 'payment.html';
 });
 
+// Check that customer provided date and time are valid
 document.getElementById('collectionDateTime').addEventListener('input', function(event) {
     const input = event.target;
     const selectedDateTime = new Date(input.value);
@@ -88,6 +89,107 @@ document.getElementById('collectionDateTime').addEventListener('input', function
     if (hour < 18 || hour > 21 || (hour === 21 && minute > 0)) {
         alert('Please select a time between 6pm and 9pm.');
         input.value = '';
+    }
+});
+
+// Time slots functionality
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
+import { getFirestore, collection, addDoc, getDocs, query, where } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore.js";
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyALpPjf1T2lH5uJAxMCbzudaP8HBXwsZPM",
+  authDomain: "velletrano-backend.firebaseapp.com",
+  projectId: "velletrano-backend",
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+async function getAvailableSlots(date) {
+    const q = query(collection(db, "bookings"), where("date", "==", date));
+    const querySnapshot = await getDocs(q);
+    const bookedSlots = [];
+    
+    querySnapshot.forEach((doc) => {
+        bookedSlots.push(doc.data().time);
+    });
+
+    // All possible slots between 18:00 and 21:00 (every 15 minutes)
+    const allSlots = [];
+    for (let hour = 18; hour <= 21; hour++) {
+        for (let minute = 0; minute < 60; minute += 15) {
+            // Add the 21:00 slot but skip any minutes after 21:00 (since it's the last slot)
+            if (hour === 21 && minute > 0) break; 
+            const time = `${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}`;
+            allSlots.push(time);
+        }
+    }
+
+    // Filter out the booked slots to get available slots
+    const availableSlots = allSlots.filter(slot => !bookedSlots.includes(slot));
+
+    // Return available slots in increasing time order (no need for sorting, they are already ordered)
+    return availableSlots;
+}
+
+
+// Function to book a time slot with a check to prevent double-booking
+async function bookSlot(date, time) {
+    try {
+        // Check if the slot is already booked
+        const q = query(collection(db, "bookings"), where("date", "==", date), where("time", "==", time));
+        const querySnapshot = await getDocs(q);
+
+        if (!querySnapshot.empty) {
+            // Slot is already booked, show an error message
+            document.getElementById('bookingMessage').innerHTML = 
+                `Slot already booked: ${time} on ${date}`;
+            document.getElementById('bookingMessage').style.color = "red";
+        } else {
+            // Slot is available, proceed with booking
+            await addDoc(collection(db, "bookings"), { date: date, time: time });
+            document.getElementById('bookingMessage').innerHTML = 
+                `Slot booked: ${time} on ${date}`;
+            document.getElementById('bookingMessage').style.color = "green";
+        }
+    } catch (e) {
+        console.error("Error booking slot: ", e);
+    }
+}
+
+// Function to display the available slots
+document.getElementById('checkSlotsBtn').addEventListener('click', async (event) => {
+    event.preventDefault(); // Prevent form submission
+    const dateAndTime = document.getElementById('collectionDateTime').value;
+    document.getElementById('bookingMessage').innerHTML = ''; // Clear the message
+    const date = dateAndTime.split('T')[0];
+    const availableSlots = await getAvailableSlots(date);
+
+    if (availableSlots.length > 0) {
+        document.getElementById('availableSlotsResult').innerHTML = 
+            'Available slots on selected Date: ' + availableSlots.join(', ');
+    } else {
+        document.getElementById('availableSlotsResult').innerHTML = 'No slots booked for this date.';
+    }
+});
+
+// Function to book a slot
+document.getElementById('bookSlotBtn').addEventListener('click', async (event) => {
+    event.preventDefault(); // Prevent form submission
+    const dateAndTime = document.getElementById('collectionDateTime').value;
+    document.getElementById('bookingMessage').innerHTML = ''; // Clear the message
+    const date = dateAndTime.split('T')[0];
+    const time = dateAndTime.split('T')[1];
+
+    if (date && time) {
+        await bookSlot(date, time);
+        // document.getElementById('availableSlotsResult').innerHTML = 
+        //     `Slot booked: ${time} on ${date}`;
+    } else {
+        alert('Please enter both date and time!');
     }
 });
 
