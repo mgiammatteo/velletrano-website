@@ -162,17 +162,25 @@ async function bookSlot(date, time) {
         const q = query(collection(db, "bookings"), where("date", "==", date), where("time", "==", time));
         const querySnapshot = await getDocs(q);
 
+        const submitOrderBtn = document.getElementById('submitOrderButton');
+
         if (!querySnapshot.empty) {
             // Slot is already booked, show an error message
             document.getElementById('bookingMessage').innerHTML = 
                 `Slot already booked: ${time} on ${date}`;
             document.getElementById('bookingMessage').style.color = "red";
+
+            // Disbale the submit order button
+            submitOrderBtn.disabled = true;
         } else {
             // Slot is available, proceed with booking
             await addDoc(collection(db, "bookings"), { date: date, time: time });
             document.getElementById('bookingMessage').innerHTML = 
                 `Slot booked: ${time} on ${date}`;
             document.getElementById('bookingMessage').style.color = "green";
+
+            // Enable the submit order button
+            submitOrderBtn.disabled = false;
         }
     } catch (e) {
         console.error("Error booking slot: ", e);

@@ -42,7 +42,7 @@ section {
 }
 
 .zoomed {
-    transform: scale(5.0) translate(35%, 0%); /* Zoom to 500%  and translate to the right*/
+    transform: scale(5.0); /* Zoom to 500% */
     cursor: zoom-out; /* Change cursor when zoomed */
 }
 
@@ -70,3 +70,14 @@ section {
     border-radius: 5px;
     cursor: pointer;
  }
+
+.ul {
+    text-align: center;
+}
+
+.ul-img {
+    display: block;
+    margin: 0 auto;
+}
+
+    
