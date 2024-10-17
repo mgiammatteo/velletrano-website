@@ -41,6 +41,18 @@ section {
     transition: transform 0.3s ease; /* Smooth transition for zoom */
 }
 
+/* Adjust for smaller screens (e.g., mobile) */
+@media (max-width: 768px) {
+    .small-icon {
+        width: 20%;
+        height: auto;
+        display: block;
+        margin: 0;
+        padding: 0;
+        transition: transform 0.3s ease; /* Smooth transition for zoom */
+    }
+}
+
 .zoomed {
     transform: scale(5.0); /* Zoom to 500% */
     cursor: zoom-out; /* Change cursor when zoomed */
@@ -79,5 +91,6 @@ section {
     display: block;
     margin: 0 auto;
 }
+
 
     
