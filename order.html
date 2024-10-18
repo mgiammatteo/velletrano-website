@@ -22,13 +22,13 @@
 
             <label>
                 <input type="checkbox" id="antipastiSmall" data-price="7">
-                Mediterranean Antipasti - Small - £7
+                Antipasti - Small - £7
             </label>
             <input type="number" id="antipastiSmallQuantity" min="1" value="1" class="smallCheckBox" enabled><br>
 
             <label>
                 <input type="checkbox" id="antipastiLarge" data-price="13">
-                Mediterranean Antipasti - Large - £13
+                Antipasti - Large - £13
             </label>
             <input type="number" id="antipastiLargeQuantity" min="1" value="1" class="smallCheckBox" enabled><br>
 
@@ -112,7 +112,7 @@
             <label for="name">Your Name:</label>
             <input type="text" id="name" required><br><br>
             <label for="collectionDateTime">Select Collection Date and Time (15 minutes slots), then check Availability:</label><br><br>
-            <input type="datetime-local" id="collectionDateTime" name="collectionDateTime" required><br><br>
+            <input type="datetime-local" id="collectionDateTime" name="collectionDateTime" step="900" required><br><br>
             <!-- Buttons to test Firestore functions -->
         <button id="checkSlotsBtn">Check Slot Availability</button>
         <button id="bookSlotBtn">Book Slot</button>

@@ -158,6 +158,22 @@ async function getAvailableSlots(date) {
 // Function to book a time slot with a check to prevent double-booking
 async function bookSlot(date, time) {
     try {
+        // Extract the minutes from the time (assuming "time" is in "HH:MM" format)
+        const [hours, minutes] = time.split(':').map(Number);
+
+        // Check if the minutes are not divisible by 15
+        if (minutes % 15 !== 0) {
+            document.getElementById('bookingMessage').innerHTML = 
+                `Please select a time in 15-minute intervals (e.g., 6:00, 6:15, 6:30, 6:45).`;
+            document.getElementById('bookingMessage').style.color = "red";
+
+            // Disbale the submit order button
+            submitOrderBtn.disabled = true;
+            
+            // Prevent further execution
+            return;
+        }
+
         // Check if the slot is already booked
         const q = query(collection(db, "bookings"), where("date", "==", date), where("time", "==", time));
         const querySnapshot = await getDocs(q);

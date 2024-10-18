@@ -31,3 +31,5 @@ section {
     position: relative;
     z-index: 1; /* Ensures the section content appears above the background */
 }
+
+/* background image end */
